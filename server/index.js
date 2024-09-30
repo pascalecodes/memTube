@@ -6,8 +6,9 @@ import videoRoutes from "./routes/videos.js"
 import commentRoutes from "./routes/comments.js"
 import authRoutes from "./routes/auth.js"
 import cookieParser from 'cookie-parser'
+import cors from 'cors';
 
-
+const PORT = 8000;
 const app = express();
 dotenv.config();
 
@@ -21,6 +22,8 @@ const connect = () =>{
         throw err;
     });
 }
+
+app.use(cors());
 
 app.use(cookieParser());
 app.use(express.json());
@@ -40,7 +43,7 @@ app.use((err, req, res, next) =>{
    });
 });
 
-app.listen(8000, () =>{
+app.listen(PORT, () =>{
     connect()
-    console.log("Connected to Server")
+    console.log(`Connected to Server ${PORT}`)
 })
