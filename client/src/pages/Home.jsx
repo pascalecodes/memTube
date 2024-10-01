@@ -9,17 +9,17 @@ justify-content: space-between;
 flex-wrap: wrap;
 `;
 
-const Home = () => {
+const Home = ({type}) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     const fetchVideos = async () => {
-      const res = await axios.get("/api/videos/random");
+      const res = await axios.get(`/api/videos/${type}`);
       //const res = await axios.get(`/videos/${type}`);
       setVideos(res.data);
     }
     fetchVideos()
-  }, []); //[type]
+  }, [type]); 
 
   return (
     <Container>
