@@ -1,6 +1,8 @@
-import React from 'react'
+import React , { useEffect, useState }from 'react'
+import axios from "axios";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
+import {format} from 'timeago.js';
 
 const Container = styled.div`
   width: ${(props) => props.type !== "sm" && "360px"};
@@ -51,22 +53,32 @@ const Info = styled.div`
   color: ${({ theme }) => theme.textSoft};
 `;
 
-const Card = ({type}) => {
+const Card = ({type, video}) => {
+  const [channel, setChannel] = useState({});
+
+  useEffect(() => {
+    const fetchChannel = async () => {
+      const res = await axios.get(`/users/find/${video.userId}`);
+      //const res = await axios.get(`/videos/${type}`);
+      setChannel(res.data);
+    }
+    fetchChannel()
+  }, [video.userId]); 
   return (
     <Link to="/video/test" style={{textDecoration:"none"}}> 
     <Container type={type}>
        <Image
           type={type}
-          src="https://content.wepik.com/statics/9411920/preview-page0.jpg"
+          src={video.imgUrl}
         />
       <Details type={type}>
         <ChannelImage 
         type={type}
-        src="https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png"/>
+        src={channel.img}/>
         <Texts>
-          <Title>Test Video</Title>
-          <ChannelName>MemTube</ChannelName>
-          <Info>660,908 views • 3 days ago</Info>
+          <Title>{video.title}</Title>
+          <ChannelName>{channel.name}</ChannelName>
+          <Info>{video.views} views • {format(video.createdAt)}</Info>
         </Texts>
       </Details>
     </Container>
