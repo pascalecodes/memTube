@@ -64,18 +64,37 @@ const Link = styled.span`
 `;
 
 const SignIn = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate()
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    // dispatch(loginStart());
+    try {
+      const res = await axios.post("/api/auth/signin", { name, password });
+      console.log(res.data)
+      // dispatch(loginSuccess(res.data));
+      // navigate("/")
+    } catch (err) {
+      // dispatch(loginFailure());
+    }
+  };
+
   return (
     <Container>
         <Wrapper>
         <Title>Sign in</Title>
         <SubTitle>to continue to MemTube</SubTitle>
-        <Input placeholder="username" />
-        <Input type="password" placeholder="password" />
-        <Button>Sign in</Button>
+        <Input placeholder="username" onChange={e=>setName(e.target.value)}/>
+        <Input type="password" placeholder="password" onChange={e=>setPassword(e.target.value)}/>
+        <Button onClick={handleLogin}>Sign in</Button>
         <Title>or</Title>
-        <Input placeholder="username" />
-        <Input placeholder="email" />
-        <Input type="password" placeholder="password" />
+        <Input placeholder="username" onChange={e=>setName(e.target.value)}/>
+        <Input placeholder="email" onChange={e=>setEmail(e.target.value)}/>
+        <Input type="password" placeholder="password" onChange={e=>setPassword(e.target.value)}/>
         <Button>Sign up</Button>
       </Wrapper>
       <More>
