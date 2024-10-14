@@ -84,6 +84,7 @@ const Title = styled.h2`
   margin-bottom: 20px;
 `;
 
+
 const Menu = ({darkMode, setDarkMode}) => {
 
   const { currentUser } = useSelector((state) => state.user);

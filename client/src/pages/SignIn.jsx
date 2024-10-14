@@ -2,10 +2,10 @@ import axios from "axios";
 import React , { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from "react-redux";
-import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
+import { loginFailure, loginStart, loginSuccess , logout} from "../redux/userSlice";
 import { auth, provider } from "../firebase";
-import { signInWithPopup } from "firebase/auth";
-//import { async } from "@firebase/util";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { async } from "@firebase/util";
 //import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -94,7 +94,7 @@ const SignIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         axios
-          .post("/auth/google", {
+          .post("/api/auth/google", {
             name: result.user.displayName,
             email: result.user.email,
             img: result.user.photoURL,
