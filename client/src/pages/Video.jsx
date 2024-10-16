@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState }  from 'react'
 import styled from 'styled-components'
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
@@ -6,6 +6,8 @@ import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import Card from "../components/Card";
 import Comments from '../components/Comments';
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
 display: flex;
@@ -106,6 +108,26 @@ const Subscribe = styled.button`
 
 
 const Video = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const path = useLocation().pathname.split("/")[2]
+  
+  const [video, setVideo] = useState({})
+  const [channel, setChannel] = useState({})
+
+  useEffect(() =>{
+    const fetchData = async () =>{
+      try {
+        const videoRes = await axios .get(`/api/videos/find/${path}`)
+        const channelRes = await axios .get(`/api/users/find/${videoRes.userId}`)
+
+        setVideo(videoRes.data)
+        setChannel(channelRes.data)
+      } catch(err){}
+    }
+    fetchData()
+  }, [path])
   return (
     <Container>
       <Content>
@@ -159,7 +181,7 @@ const Video = () => {
         <Hr />
         <Comments/>
       </Content>
-      <Recommendation>
+      {/* <Recommendation>
       <Card type="sm"/>
         <Card type="sm"/>
         <Card type="sm"/>
@@ -173,9 +195,9 @@ const Video = () => {
         <Card type="sm"/>
         <Card type="sm"/>
         <Card type="sm"/>
-      </Recommendation>
+      </Recommendation> */}
     </Container>
-  )
-}
+  );
+};
 
 export default Video
