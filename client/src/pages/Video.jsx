@@ -8,6 +8,9 @@ import Card from "../components/Card";
 import Comments from '../components/Comments';
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { fetchSuccess } from '../redux/videoSlice';
+import axios from "axios";
+
 
 const Container = styled.div`
 display: flex;
@@ -109,25 +112,23 @@ const Subscribe = styled.button`
 
 const Video = () => {
   const { currentUser } = useSelector((state) => state.user);
+  const { currentVideo } = useSelector((state) => state.video);
   const dispatch = useDispatch();
 
-  const path = useLocation().pathname.split("/")[2]
-  
-  const [video, setVideo] = useState({})
+  const path = useLocation().pathname.split("/")[2]  
   const [channel, setChannel] = useState({})
-
+console.log(currentVideo)
   useEffect(() =>{
     const fetchData = async () =>{
       try {
         const videoRes = await axios .get(`/api/videos/find/${path}`)
         const channelRes = await axios .get(`/api/users/find/${videoRes.userId}`)
-
-        setVideo(videoRes.data)
         setChannel(channelRes.data)
+        dispatch(fetchSuccess(videoRes.data))
       } catch(err){}
     }
     fetchData()
-  }, [path])
+  }, [path,dispatch])
   return (
     <Container>
       <Content>
@@ -143,12 +144,12 @@ const Video = () => {
             allowfullscreen>
          </iframe>
         </VideoWrapper>
-        <Title>Test Video</Title>
+        <Title>{currentVideo.title}</Title>
         <Details>
-          <Info>5,938,514 views • Feb 22, 2024</Info>
+          <Info>{currentVideo.views} views • {FormData(currentVideo.createdAt)}</Info>
           <Buttons>
             <Button>
-              <ThumbUpOutlinedIcon /> 123
+              <ThumbUpOutlinedIcon /> {currentVideo.likes?.length}
             </Button>
             <Button>
               <ThumbDownOffAltOutlinedIcon /> Dislike
@@ -164,15 +165,12 @@ const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src="https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png" />
+            <Image src={channel.img} />
             <ChannelDetail>
-              <ChannelName>MemTube</ChannelName>
-              <ChannelCounter>200K subscribers</ChannelCounter>
+              <ChannelName>{channel.name}</ChannelName>
+              <ChannelCounter>{channel.subcribers} subscribers</ChannelCounter>
               <Description>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Doloribus laborum delectus unde quaerat dolore culpa sit aliquam
-                at. Vitae facere ipsum totam ratione exercitationem. Suscipit
-                animi accusantium dolores ipsam ut.
+                {currentVideo.desc}
               </Description>
             </ChannelDetail>
           </ChannelInfo>
