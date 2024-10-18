@@ -62,7 +62,7 @@ const Card = ({type, video}) => {
       //const res = await axios.get(`/videos/${type}`);
       setChannel(res.data);
     }
-    fetchChannel()
+    fetchChannel();
   }, [video.userId]); 
 
   return (
