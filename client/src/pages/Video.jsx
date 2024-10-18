@@ -5,11 +5,12 @@ import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutl
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import Card from "../components/Card";
+import axios from "axios";
 import Comments from '../components/Comments';
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { fetchSuccess } from '../redux/videoSlice';
-import axios from "axios";
+import { format } from "timeago.js";
 
 
 const Container = styled.div`
@@ -118,8 +119,9 @@ const Video = () => {
   const path = useLocation().pathname.split("/")[2]  
   const [channel, setChannel] = useState({})
 console.log(currentVideo)
+
   useEffect(() =>{
-    const fetchData = async () =>{
+    const fetchData = async () => {
       try {
         const videoRes = await axios .get(`/api/videos/find/${path}`)
         const channelRes = await axios .get(`/api/users/find/${videoRes.userId}`)
@@ -127,8 +129,9 @@ console.log(currentVideo)
         dispatch(fetchSuccess(videoRes.data))
       } catch(err){}
     }
-    fetchData()
-  }, [path,dispatch])
+    fetchData();
+  }, [path, dispatch]);
+  
   return (
     <Container>
       <Content>
