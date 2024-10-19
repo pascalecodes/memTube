@@ -118,13 +118,14 @@ const Video = () => {
 
   const path = useLocation().pathname.split("/")[2]  
   const [channel, setChannel] = useState({})
-console.log(currentVideo)
+// console.log(path, "this is current", currentVideo)
 
   useEffect(() =>{
     const fetchData = async () => {
       try {
         const videoRes = await axios .get(`/api/videos/find/${path}`)
-        const channelRes = await axios .get(`/api/users/find/${videoRes.userId}`)
+        const channelRes = await axios .get(`/api/users/find/${videoRes.data.userId}`)
+        
         setChannel(channelRes.data)
         dispatch(fetchSuccess(videoRes.data))
       } catch(err){}
@@ -149,10 +150,11 @@ console.log(currentVideo)
         </VideoWrapper>
         <Title>{currentVideo.title}</Title>
         <Details>
-          <Info>{currentVideo.views} views • {FormData(currentVideo.createdAt)}</Info>
+          <Info>{currentVideo.views}  views • {format(currentVideo.createdAt)}</Info>
           <Buttons>
             <Button>
-              <ThumbUpOutlinedIcon /> {currentVideo.likes?.length}
+              <ThumbUpOutlinedIcon />
+              {currentVideo.likes?.length}
             </Button>
             <Button>
               <ThumbDownOffAltOutlinedIcon /> Dislike
@@ -173,7 +175,7 @@ console.log(currentVideo)
               <ChannelName>{channel.name}</ChannelName>
               <ChannelCounter>{channel.subcribers} subscribers</ChannelCounter>
               <Description>
-                {currentVideo.desc}
+              {currentVideo.desc}
               </Description>
             </ChannelDetail>
           </ChannelInfo>
