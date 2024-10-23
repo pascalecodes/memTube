@@ -33,6 +33,33 @@ const Close = styled.div`
 const Title = styled.h1`
   text-align: center;
 `;
+const Input = styled.input`
+  border: 1px solid ${({ theme }) => theme.soft};
+  color: ${({ theme }) => theme.text};
+  border-radius: 3px;
+  padding: 10px;
+  background-color: transparent;
+  z-index: 999;
+`;
+const Desc = styled.textarea`
+  border: 1px solid ${({ theme }) => theme.soft};
+  color: ${({ theme }) => theme.text};
+  border-radius: 3px;
+  padding: 10px;
+  background-color: transparent;
+`;
+const Button = styled.button`
+  border-radius: 3px;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.soft};
+  color: ${({ theme }) => theme.textSoft};
+`;
+const Label = styled.label`
+  font-size: 14px;
+`;
 
 const Upload = ({setOpen}) => {
   return (
@@ -40,6 +67,14 @@ const Upload = ({setOpen}) => {
         <Wrapper>
             <Close onClick={()=>setOpen(false)}>X</Close>
             <Title>Upload a New Video</Title>
+            <Label>Video:</Label>
+            <Input type="file" accept="video/*"/>
+            <Input type="text" placeholder='Title'/>
+            <Desc placeholder='Description' rows={8} />
+            <Input type="text" placeholder='Seperate the tags with commas'/>
+            <Label>Image:</Label>
+            <Input type="file" accept="img/*"/>
+            <Button>Upload</Button>
         </Wrapper>
     </Container>
   )
