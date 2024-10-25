@@ -80,11 +80,11 @@ const Upload = ({setOpen}) => {
 
     // const navigate = useNavigate()
 
-    // const handleChange = (e) => {
-    //     setInputs((prev) => {
-    //     return { ...prev, [e.target.name]: e.target.value };
-    //     });
-    // };
+    const handleChange = (e) => {
+        setInputs((prev) => {
+        return { ...prev, [e.target.name]: e.target.value };
+        });
+    };
 
     // const handleTags = (e) => {
     //     setTags(e.target.value.split(","));
@@ -146,9 +146,9 @@ const Upload = ({setOpen}) => {
             <Title>Upload a New Video</Title>
             <Label>Video:</Label>
             <Input type="file" accept="video/*" onChange={e=>setVideo(e.target.files[0])}/>
-            <Input type="text" placeholder='Title'/>
-            <Desc placeholder='Description' rows={8} />
-            <Input type="text" placeholder='Seperate the tags with commas'/>
+            <Input type="text" placeholder='Title' onChange={handleChange}/>
+            <Desc placeholder='Description' rows={8} onChange={handleChange}/>
+            <Input type="text" placeholder='Seperate the tags with commas' onChange={handleChange}/>
             <Label>Image:</Label>
             <Input type="file" accept="img/*" onChange={e=>setImg(e.target.files[0])}/>
             <Button>Upload</Button>
