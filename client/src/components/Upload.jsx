@@ -86,9 +86,9 @@ const Upload = ({setOpen}) => {
         });
     };
 
-    // const handleTags = (e) => {
-    //     setTags(e.target.value.split(","));
-    // };
+    const handleTags = (e) => {
+        setTags(e.target.value.split(","));
+    };
     // const uploadFile = (file, urlType) => {
     //     const storage = getStorage(app);
     //     const fileName = new Date().getTime() + file.name;
@@ -123,13 +123,13 @@ const Upload = ({setOpen}) => {
     //     );
     // };
 
-    // useEffect(() => {
-    //   video && uploadFile(video , "videoUrl");
-    // }, [video]);
+    useEffect(() => {
+      video && uploadFile(video , "videoUrl");
+    }, [video]);
   
-    // useEffect(() => {
-    //   img && uploadFile(img, "imgUrl");
-    // }, [img]);
+    useEffect(() => {
+      img && uploadFile(img, "imgUrl");
+    }, [img]);
   
     // const handleUpload = async (e)=>{
     //   e.preventDefault();
@@ -146,9 +146,9 @@ const Upload = ({setOpen}) => {
             <Title>Upload a New Video</Title>
             <Label>Video:</Label>
             <Input type="file" accept="video/*" onChange={e=>setVideo(e.target.files[0])}/>
-            <Input type="text" placeholder='Title' onChange={handleChange}/>
-            <Desc placeholder='Description' rows={8} onChange={handleChange}/>
-            <Input type="text" placeholder='Seperate the tags with commas' onChange={handleChange}/>
+            <Input type="text" placeholder='Title' onChange={e=>setTitle(e.target.value)}/>
+            <Desc placeholder='Description' rows={8} onChange={e=>setDesc(e.target.value)}/>
+            <Input type="text" placeholder='Seperate the tags with commas' onChange={handleTags}/>
             <Label>Image:</Label>
             <Input type="file" accept="img/*" onChange={e=>setImg(e.target.files[0])}/>
             <Button>Upload</Button>
