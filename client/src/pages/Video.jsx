@@ -197,6 +197,9 @@ const Video = () => {
               <Description>
               {currentVideo.desc}
               </Description>
+              <div>
+                Tags: {currentVideo.tags}
+              </div>
             </ChannelDetail>
           </ChannelInfo>
           <Subscribe onClick={handleSub}>
