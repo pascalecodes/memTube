@@ -70,7 +70,9 @@ const Card = ({type, video}) => {
     <Container type={type}>
        <Image
           type={type}
-          src={video.imgUrl}
+          src={video.imgUrl} 
+          //  src={video.imgUrl || 'https://content.wepik.com/statics/9411920/preview-page0.jpg'} 
+          // alt="Video Thumbnail"
         />
       <Details type={type}>
         <ChannelImage 
