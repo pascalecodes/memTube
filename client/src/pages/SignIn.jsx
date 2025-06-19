@@ -115,7 +115,7 @@ const SignIn = () => {
     <Container>
         <Wrapper>
         <Title>Sign in</Title>
-        <SubTitle>to continue to MemTube</SubTitle>
+        <SubTitle>to use MemTube</SubTitle>
         <Input placeholder="username" onChange={e=>setName(e.target.value)}/>
         <Input type="password" placeholder="password" onChange={e=>setPassword(e.target.value)}/>
         <Button onClick={handleLogin}>Sign in</Button>
